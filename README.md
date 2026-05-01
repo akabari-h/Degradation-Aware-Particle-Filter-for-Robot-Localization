@@ -70,18 +70,18 @@ no single environmental condition can disable all three simultaneously.
 ## System Architecture
 
 Gazebo Harmonic
-│
-├── Camera Plugin ──► camera_degradation_node.py ──► /camera/degraded
-├── Ultrasonic Plugin ► ultrasonic_degradation_node.py ► /ultrasonic/degraded
-└── IMU Plugin ──────────────────────────────────────► /imu/data
-│
-confidence_monitor_node.py
-(computes α_cam, α_ult @ 10 Hz)
-│
-particle_filter_node.py  ◄── odom_tf_publisher.py
-(Predict → Update → Resample)
-│
-/da_pf/pose, /da_pf/particle_spread
+      │
+      ├── Camera Plugin ──► camera_degradation_node.py ──► /camera/degraded
+      ├── Ultrasonic Plugin ──► ultrasonic_degradation_node.py ──► /ultrasonic/degraded
+      └── IMU Plugin ──────────────────────────────────────────► /imu/data
+                                        │
+                              confidence_monitor_node.py
+                              (computes α_cam, α_ult @ 10 Hz)
+                                        │
+                              particle_filter_node.py ◄── odom_tf_publisher.py
+                              (Predict → Update → Resample)
+                                        │
+                              /da_pf/pose, /da_pf/particle_spread
 
 **Key architectural decisions:**
 - **Interception-based pipeline** — degradation nodes sit between the simulator 
@@ -240,13 +240,13 @@ python3 evaluate_results.py
 
 ## Repository Structure
 
-├── config/          # ROS 2 parameter files (AMCL, DA-PF, sensor configs)
-├── launch/          # Launch files for simulation and baseline
-├── meshes/          # Robot mesh files
-├── models/          # Gazebo model definitions
-├── scripts/         # Experiment runner and evaluation scripts
-├── urdf/            # Robot URDF/Xacro description
-├── worlds/          # Gazebo world file (warehouse)
+├── config/     # ROS 2 parameter files (AMCL, DA-PF, sensor configs)
+├── launch/     # Launch files for simulation and baseline
+├── meshes/     # Robot mesh files
+├── models/     # Gazebo model definitions
+├── scripts/    # Experiment runner and evaluation scripts
+├── urdf/       # Robot URDF/Xacro description
+├── worlds/     # Gazebo world file (warehouse)
 ├── CMakeLists.txt
 ├── package.xml
 └── README.md
