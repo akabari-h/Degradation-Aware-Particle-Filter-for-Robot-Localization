@@ -261,6 +261,7 @@ This implementation accompanies the course project report:
 > for Robust Robot Localization in Hostile Environments**  
 > Submitted for EECE 5554 — Robotics Sensing and Navigation  
 > Northeastern University, Spring 2026
+> 📄 [Read the Full Report](./DA-PF_Report.pdf)
 
 ---
 
