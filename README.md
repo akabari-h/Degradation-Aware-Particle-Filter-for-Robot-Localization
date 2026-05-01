@@ -69,6 +69,7 @@ no single environmental condition can disable all three simultaneously.
 
 ## System Architecture
 
+```
 Gazebo Harmonic
       │
       ├── Camera Plugin ──► camera_degradation_node.py ──► /camera/degraded
@@ -82,6 +83,7 @@ Gazebo Harmonic
                               (Predict → Update → Resample)
                                         │
                               /da_pf/pose, /da_pf/particle_spread
+```
 
 **Key architectural decisions:**
 - **Interception-based pipeline** — degradation nodes sit between the simulator 
@@ -240,6 +242,7 @@ python3 evaluate_results.py
 
 ## Repository Structure
 
+```
 ├── config/     # ROS 2 parameter files (AMCL, DA-PF, sensor configs)
 ├── launch/     # Launch files for simulation and baseline
 ├── meshes/     # Robot mesh files
@@ -250,6 +253,7 @@ python3 evaluate_results.py
 ├── CMakeLists.txt
 ├── package.xml
 └── README.md
+```
 
 ---
 
