@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="rover">
+
+  
+  <!--        Properties              -->
+  
+  <xacro:property name="scale_factor" value="1.8"/>
+  <xacro:property name="wheel_radius" value="${0.088 * scale_factor}"/>
+  <xacro:property name="wheel_separation" value="${0.40126 * scale_factor}"/>
+
+  
+  <!--   Dummy root link              -->
+  
+  <link name="base_footprint"/>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+  </joint>
+
+  
+  <!--      Base Link (YELLOW)        -->
+  
+  <link name="base_link">
+    <inertial>
+      <origin xyz="${0.010885 * scale_factor} 0 ${0.0020847 * scale_factor}" rpy="0 0 0"/>
+      <mass value="25.988"/>
+      <inertia
+        ixx="0.22029" ixy="0" ixz="7.6472E-05"
+        iyy="0.81067" iyz="0" izz="0.93602"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rsn_p/meshes/base_link.STL" scale="${scale_factor} ${scale_factor} ${scale_factor}"/>
+      </geometry>
+      <material name="maroon">
+        <color rgba="0.5 0.05 0.1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rsn_p/meshes/base_link.STL" scale="${scale_factor} ${scale_factor} ${scale_factor}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <gazebo reference="base_link">
+    <visual>
+      <material>
+        <ambient>0.5 0.05 0.1 1</ambient>
+        <diffuse>0.5 0.05 0.1 1</diffuse>
+      </material>
+    </visual>
+  </gazebo>
+
+  
+  <!--     Right Wheel (Dark Gray)    -->
+  
+  <link name="right_wheel">
+    <inertial>
+      <origin xyz="0 ${0.021102 * scale_factor} 0" rpy="0 0 0"/>
+      <mass value="1.1549"/>
+      <inertia
+        ixx="0.0024515" ixy="0" ixz="0"
+        iyy="0.0044337" iyz="0" izz="0.0024515"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rsn_p/meshes/right_wheel.STL" scale="${scale_factor} ${scale_factor} ${scale_factor}"/>
+      </geometry>
+      <material name="pitch_black">
+        <color rgba="0.02 0.02 0.02 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rsn_p/meshes/right_wheel.STL" scale="${scale_factor} ${scale_factor} ${scale_factor}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_joint" type="continuous">
+    <origin xyz="${-0.12395 * scale_factor} ${-0.19876 * scale_factor} ${-0.022818 * scale_factor}" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <axis xyz="0 -1 0"/>
+  </joint>
+
+  <gazebo reference="right_wheel">
+    <visual>
+      <material>
+        <ambient>0.02 0.02 0.02 1</ambient>
+        <diffuse>0.02 0.02 0.02 1</diffuse>
+      </material>
+    </visual>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+  </gazebo>
+
+  
+  <!--      Left Wheel (Dark Gray)    -->
+  
+  <link name="left_wheel">
+    <inertial>
+      <origin xyz="0 ${-0.024839 * scale_factor} 0" rpy="0 0 0"/>
+      <mass value="1.1549"/>
+      <inertia
+        ixx="0.0024515" ixy="0" ixz="0"
+        iyy="0.0044337" iyz="0" izz="0.0024515"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rsn_p/meshes/left_wheel.STL" scale="${scale_factor} ${scale_factor} ${scale_factor}"/>
+      </geometry>
+      <material name="pitch_black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rsn_p/meshes/left_wheel.STL" scale="${scale_factor} ${scale_factor} ${scale_factor}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_joint" type="continuous">
+    <origin xyz="${-0.12395 * scale_factor} ${0.2025 * scale_factor} ${-0.022818 * scale_factor}" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <axis xyz="0 -1 0"/>
+  </joint>
+
+  <gazebo reference="left_wheel">
+    <visual>
+      <material>
+        <ambient>0.02 0.02 0.02 1</ambient>
+        <diffuse>0.02 0.02 0.02 1</diffuse>
+      </material>
+    </visual>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+  </gazebo>
+
+  
+  <!--    Castor Wheel                -->
+  
+  <link name="castor_wheel">
+    <inertial>
+      <origin xyz="0 ${0.0125 * scale_factor} 0" rpy="0 0 0"/>
+      <mass value="0.015472"/>
+      <inertia
+        ixx="1.6804E-06" ixy="0" ixz="0"
+        iyy="1.8498E-06" iyz="0" izz="1.6804E-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rsn_p/meshes/castor_wheel.STL" scale="${scale_factor} ${scale_factor} ${scale_factor}"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://rsn_p/meshes/castor_wheel.STL" scale="${scale_factor} ${scale_factor} ${scale_factor}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="caster_joint" type="continuous">
+    <origin xyz="${0.22105 * scale_factor} ${-0.0125 * scale_factor} ${-0.095318 * scale_factor}" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="castor_wheel"/>
+    <axis xyz="0 -1 0"/>
+  </joint>
+
+  <gazebo reference="castor_wheel">
+    <visual>
+      <material>
+        <ambient>0.02 0.02 0.02 1</ambient>
+        <diffuse>0.02 0.02 0.02 1</diffuse>
+      </material>
+    </visual>
+    <mu1>0.001</mu1>
+    <mu2>0.001</mu2>
+  </gazebo>
+
+  
+  <!--    Sensor Platform (top)       -->
+  
+  <link name="sensor_platform">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.30 0.40 0.05"/>
+      </geometry>
+      <material name="platform_color">
+        <color rgba="0.3 0.3 0.3 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="sensor_platform_joint" type="fixed">
+    <origin xyz="${0.1 * scale_factor} 0 ${0.06 * scale_factor}" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="sensor_platform"/>
+  </joint>
+
+  <gazebo reference="sensor_platform">
+    <visual>
+      <material>
+        <ambient>0.2 0.2 0.2 1</ambient>
+        <diffuse>0.2 0.2 0.2 1</diffuse>
+      </material>
+    </visual>
+  </gazebo>
+
+  
+  <!--        IMU Sensor              -->
+  
+  <link name="imu_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <origin xyz="0 0 0.03" rpy="0 0 0"/>
+    <parent link="sensor_platform"/>
+    <child link="imu_link"/>
+  </joint>
+
+  <gazebo reference="imu_link">
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <topic>imu</topic>
+      <imu>
+        <angular_velocity>
+          <x><noise type="gaussian"><mean>0</mean><stddev>0.01</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0</mean><stddev>0.01</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0</mean><stddev>0.01</stddev></noise></z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x><noise type="gaussian"><mean>0</mean><stddev>0.1</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0</mean><stddev>0.1</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0</mean><stddev>0.1</stddev></noise></z>
+        </linear_acceleration>
+      </imu>
+    </sensor>
+  </gazebo>
+
+  
+  <!--      Camera Sensor (RED)       -->
+  
+  <link name="camera_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.05"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.10 0.18 0.10"/>
+      </geometry>
+      <material name="camera_color">
+        <color rgba="0.8 0.1 0.1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.10 0.18 0.10"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Camera on top-right of sensor platform -->
+  <joint name="camera_joint" type="fixed">
+    <origin xyz="0.08 0.06 0.05" rpy="0 0 0"/>
+    <parent link="sensor_platform"/>
+    <child link="camera_link"/>
+  </joint>
+
+  <!-- Optical frame (ROS camera convention: z forward, x right, y down) -->
+  <link name="camera_optical_link"/>
+
+  <joint name="camera_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    <parent link="camera_link"/>
+    <child link="camera_optical_link"/>
+  </joint>
+
+  <gazebo reference="camera_link">
+    <visual>
+      <material>
+        <ambient>0.8 0.1 0.1 1</ambient>
+        <diffuse>0.8 0.1 0.1 1</diffuse>
+      </material>
+    </visual>
+    <sensor name="camera" type="camera">
+      <always_on>true</always_on>
+      <update_rate>15</update_rate>
+      <topic>camera</topic>
+      <camera>
+        <horizontal_fov>1.39626</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>600</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>15.0</far>
+        </clip>
+      </camera>
+    </sensor>
+  </gazebo>
+
+  
+  <!--   Ultrasonic Sensor (BLUE)     -->
+  <!--  (simulated as 1-ray lidar)   -->
+  
+  <link name="ultrasonic_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.01"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.08"/>
+      </geometry>
+      <material name="sensor_blue">
+        <color rgba="0.1 0.3 0.9 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+      <geometry>
+        <cylinder radius="0.04" length="0.08"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Ultrasonic on top-left of sensor platform -->
+  <joint name="ultrasonic_joint" type="fixed">
+    <origin xyz="0.08 -0.06 0.05" rpy="0 0 0"/>
+    <parent link="sensor_platform"/>
+    <child link="ultrasonic_link"/>
+  </joint>
+
+  <gazebo reference="ultrasonic_link">
+    <visual>
+      <material>
+        <ambient>0.1 0.3 0.9 1</ambient>
+        <diffuse>0.1 0.3 0.9 1</diffuse>
+      </material>
+    </visual>
+    <sensor name="ultrasonic" type="gpu_lidar">
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <topic>ultrasonic</topic>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>1</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.209</min_angle>
+            <max_angle>0.209</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.02</min>
+          <max>4.0</max>
+        </range>
+      </lidar>
+    </sensor>
+  </gazebo>
+
+  
+  <!--   2D LiDAR (for AMCL only)    -->
+  
+  <link name="lidar_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="1e-5" ixy="0" ixz="0" iyy="1e-5" iyz="0" izz="1e-5"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.04"/>
+      </geometry>
+      <material name="lidar_black">
+        <color rgba="0.1 0.1 0.1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="lidar_joint" type="fixed">
+    <origin xyz="0 0 0.06" rpy="0 0 0"/>
+    <parent link="sensor_platform"/>
+    <child link="lidar_link"/>
+  </joint>
+
+  <gazebo reference="lidar_link">
+    <visual>
+      <material>
+        <ambient>0.1 0.1 0.1 1</ambient>
+        <diffuse>0.1 0.1 0.1 1</diffuse>
+      </material>
+    </visual>
+    <sensor name="lidar" type="gpu_lidar">
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <topic>scan</topic>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.1</min>
+          <max>12.0</max>
+        </range>
+      </lidar>
+    </sensor>
+  </gazebo>
+
+  
+  <!--   Gazebo System Plugins        -->
+  
+
+  <!-- Differential drive controller -->
+  <gazebo>
+    <plugin filename="gz-sim-diff-drive-system"
+            name="gz::sim::systems::DiffDrive">
+      <left_joint>left_joint</left_joint>
+      <right_joint>right_joint</right_joint>
+      <wheel_separation>${wheel_separation}</wheel_separation>
+      <wheel_radius>${wheel_radius}</wheel_radius>
+      <max_linear_acceleration>1.0</max_linear_acceleration>
+      <max_angular_acceleration>2.0</max_angular_acceleration>
+      <topic>cmd_vel</topic>
+      <odom_topic>odom</odom_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_footprint</child_frame_id>
+      <odom_publish_frequency>30</odom_publish_frequency>
+    </plugin>
+  </gazebo>
+
+  <!-- Sensor system -->
+  <gazebo>
+    <plugin filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors">
+      <render_engine>ogre</render_engine>
+    </plugin>
+  </gazebo>
+
+  <!-- IMU system -->
+  <gazebo>
+    <plugin filename="gz-sim-imu-system"
+            name="gz::sim::systems::Imu"/>
+  </gazebo>
+
+  <!-- Joint state publisher -->
+  <gazebo>
+    <plugin filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::systems::JointStatePublisher"/>
+  </gazebo>
+
+  <!-- Pose publisher for ground truth -->
+  <gazebo>
+    <plugin filename="gz-sim-pose-publisher-system"
+            name="gz::sim::systems::PosePublisher">
+      <publish_link_pose>false</publish_link_pose>
+      <publish_model_pose>true</publish_model_pose>
+      <publish_nested_model_pose>false</publish_nested_model_pose>
+      <update_frequency>10</update_frequency>
+    </plugin>
+  </gazebo>
+
+</robot>

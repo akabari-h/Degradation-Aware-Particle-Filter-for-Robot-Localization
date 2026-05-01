@@ -1,0 +1,4 @@
+controller_joint_names:
+  - right_joint
+  - left_joint
+  - caster_joint

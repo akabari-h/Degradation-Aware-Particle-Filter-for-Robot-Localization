@@ -1,0 +1,59 @@
+amcl:
+  ros__parameters:
+    use_sim_time: true
+
+    # Particle count
+    min_particles: 100
+    max_particles: 500
+
+    # Motion model — match DA-PF noise params for fair comparison
+    robot_model_type: "nav2_amcl::DifferentialMotionModel"
+    alpha1: 0.05    # rot -> rot
+    alpha2: 0.01    # trans -> rot  (note: AMCL uses alpha2 differently)
+    alpha3: 0.05    # trans -> trans
+    alpha4: 0.01    # rot -> trans
+    alpha5: 0.0     # translation noise (not used in diff model)
+
+    # Sensor model — LiDAR
+    laser_model_type: "likelihood_field"
+    laser_likelihood_max_dist: 2.0
+    laser_max_range: 12.0
+    laser_min_range: 0.1
+    max_beams: 60
+
+    # Scan topic — use degraded LiDAR for fair comparison
+    scan_topic: /scan/degraded
+
+    # Transform frames
+    base_frame_id: "base_footprint"
+    odom_frame_id: "odom"
+    global_frame_id: "map"
+    tf_broadcast: true
+    transform_tolerance: 5.0
+
+    # Update thresholds
+    update_min_d: 0.1    # meters moved before update
+    update_min_a: 0.2    # radians rotated before update
+
+    # Recovery
+    recovery_alpha_slow: 0.001
+    recovery_alpha_fast: 0.1
+
+    # Initial pose (center of warehouse)
+    set_initial_pose: true
+    initial_pose:
+      x: 0.0
+      y: 0.0
+      z: 0.0
+      yaw: 0.0
+
+map_server:
+  ros__parameters:
+    use_sim_time: true
+    yaml_filename: ""  # Set in launch file
+
+lifecycle_manager:
+  ros__parameters:
+    use_sim_time: true
+    autostart: true
+    node_names: ["map_server", "amcl"]

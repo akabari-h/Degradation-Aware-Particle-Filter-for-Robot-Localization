@@ -1,0 +1,29 @@
+# ArUco marker positions — 20m x 15m warehouse
+# 4 markers per wall, all on outer walls
+aruco_dictionary: DICT_6X6_250
+marker_size: 0.5
+
+markers:
+  # North wall — facing south
+  - {id: 0,  x: -7.0,  y: 7.47,  z: 1.2, yaw: 0.0,      wall: north}
+  - {id: 1,  x: -2.0,  y: 7.47,  z: 1.2, yaw: 0.0,      wall: north}
+  - {id: 2,  x: 3.0,   y: 7.47,  z: 1.2, yaw: 0.0,      wall: north}
+  - {id: 3,  x: 8.0,   y: 7.47,  z: 1.2, yaw: 0.0,      wall: north}
+
+  # South wall — facing north
+  - {id: 4,  x: -7.0,  y: -7.47, z: 1.2, yaw: 3.14159,  wall: south}
+  - {id: 5,  x: -2.0,  y: -7.47, z: 1.2, yaw: 3.14159,  wall: south}
+  - {id: 6,  x: 3.0,   y: -7.47, z: 1.2, yaw: 3.14159,  wall: south}
+  - {id: 7,  x: 8.0,   y: -7.47, z: 1.2, yaw: 3.14159,  wall: south}
+
+  # East wall — facing west
+  - {id: 8,  x: 9.97,  y: 5.0,   z: 1.2, yaw: -1.5708,  wall: east}
+  - {id: 9,  x: 9.97,  y: 1.5,   z: 1.2, yaw: -1.5708,  wall: east}
+  - {id: 10, x: 9.97,  y: -2.0,  z: 1.2, yaw: -1.5708,  wall: east}
+  - {id: 11, x: 9.97,  y: -5.5,  z: 1.2, yaw: -1.5708,  wall: east}
+
+  # West wall — facing east
+  - {id: 12, x: -9.97, y: 5.0,   z: 1.2, yaw: 1.5708,   wall: west}
+  - {id: 13, x: -9.97, y: 1.5,   z: 1.2, yaw: 1.5708,   wall: west}
+  - {id: 14, x: -9.97, y: -2.0,  z: 1.2, yaw: 1.5708,   wall: west}
+  - {id: 15, x: -9.97, y: -5.5,  z: 1.2, yaw: 1.5708,   wall: west}
